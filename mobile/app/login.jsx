@@ -1,7 +1,12 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
-
+import useAuthStore from "../store/authStore";
 export default function LoginScreen() {
+    const [email, setEmail] = useState("");
+    const [Password, setPassword] = useState("");
+
+    
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Welcome Back</Text>
