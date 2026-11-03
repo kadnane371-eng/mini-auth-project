@@ -1,7 +1,6 @@
-import User  from "../models/User";
+import User  from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { where } from "sequelize";
 
 export const register = async (req, res) => {
     try {
@@ -115,6 +114,28 @@ export const getUsers = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             message: "erreur serveur",
+        });
+    }
+};
+
+export const deleteAccount = async (req, res) => {
+    try {
+        const deletedCount = await User.destroy({
+            where: { id: req.user.id },
+        });
+
+        if (deletedCount === 0) {
+            return res.status(404).json({
+                message: "Account not found",
+            });
+        }
+
+        return res.status(200).json({
+            message: "Account deleted successfully",
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Server error",
         });
     }
 };
