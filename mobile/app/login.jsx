@@ -6,7 +6,21 @@ export default function LoginScreen() {
     const [email, setEmail] = useState("");
     const [Password, setPassword] = useState("");
 
-    
+      const login = useAuthStore((state) => state.login);
+
+  const handleLogin = async () => {
+    try {
+      await login(email, password);
+
+      router.replace("/users");
+    } catch (error) {
+      Alert.alert(
+        "Login Error",
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
+  };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Welcome Back</Text>

@@ -1,7 +1,31 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet,  Alert, } from "react-native";
 import { router } from "expo-router";
+import api from "../services/api";
 
 export default function RegisterScreen() {
+    const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    try {
+      await api.post("/register", {
+        name,
+        email,
+        password,
+      });
+
+      Alert.alert("Success", "Account created successfully");
+
+      router.replace("/");
+    } catch (error) {
+      Alert.alert(
+        "Register Error",
+        error.response?.data?.message || "Something went wrong"
+      );
+    }
+  };
     return (
         <View style={styles.container}>
           <Text style={styles.title}>Create Account</Text>
